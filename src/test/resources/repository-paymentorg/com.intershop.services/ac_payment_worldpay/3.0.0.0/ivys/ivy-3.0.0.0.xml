@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+  <info organisation="com.intershop.services" module="ac_payment_worldpay" revision="3.0.0.0" status="integration" publication="20150917092125">
+    <e:displayName>Adapter - Payment Service WorldPay</e:displayName>
+  </info>
+  <configurations>
+    <conf name="default" visibility="public" extends="runtime"/>
+    <conf name="runtime" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="ac_payment_worldpay" type="share" ext="zip" conf="runtime"/>
+    <artifact name="ac_payment_worldpay" type="jar" ext="jar" conf="runtime"/>
+    <artifact name="ac_payment_worldpay" type="javadoc" ext="zip" conf="runtime" m:classifier="javadoc" xmlns:m="http://ant.apache.org/ivy/maven"/>
+    <artifact name="ac_payment_worldpay" type="cartridge" ext="zip" conf="runtime"/>
+  </publications>
+  <dependencies>
+    <dependency org="com.intershop" name="bts" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="core" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_customer_orm" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="jmx" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="tools" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="orm" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="isml" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="servletengine" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="pf_property" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_spreadsheet" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_customer" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_user" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_application" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="app" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="businessobject" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_address" rev="7.5.+" conf="runtime-&gt;default"/>
+    <dependency org="com.intershop" name="bc_repository" rev="7.5.+" conf="runtime-&gt;default"/>
+  </dependencies>
+</ivy-module>

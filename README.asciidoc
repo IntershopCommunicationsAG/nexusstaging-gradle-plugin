@@ -1,0 +1,112 @@
+= Nexus Staging Gradle Plugin
+:latestRevision: 1.0.0
+:toc:
+
+== Summary
+This plugin transfer a set of modules to a Sonatype Nexus staging repository. The modules can be stored in an Ivy or Maven repository.
+So it is possible to handle the complete result of a Gradle multi project build in one staging repository of a Sonatype Nexus Pro instance.
+
+== Usage
+To apply the Nexus Staging Plugin to your project, add the following in your build script:
+
+[source,groovy,subs="attributes"]
+----
+plugins {
+    id 'com.intershop.gradle.nexusstaging' version '{latestRevision}'
+}
+
+nexusStaging {
+    server {
+        baseURL = &lt;Sonataype Nexus Parse URL&gt;
+        username = &lt;user name&gt;
+        password =  &lt;password&gt;
+    }
+
+    repositoryDir = &lt;path to local repository&gt;
+    description = &lt;description for the respoitory&gt;
+    resultPropertiesFile = &lt;file path to a property file&gt;
+    publications = ['myIvyPublication']
+}
+
+----
+
+This plugin adds a task to the project for copying a local file repositry to a Sonatype Nexus staging respository. It creates also an "closeRepo" task, which closes all
+open Tasks based on the info on the filesystem. Snapshot versions will be ignored and not handled by this plugin.
+
+This functionality is only available with Sonatype Nexus Repository.
+
+== Tasks
+The Nesus Staging Plugin plugin adds two tasks to the project.
+
+[cols="25%,30%,45%", width="95%", options="header"]
+|===
+|Task name  |Type             |Description
+|upload     | com.intershop.gradle.nexusstaging.tasks.CopyToRepos | This task copy the local repository data to a Sonatype Nexus Staging repository and closes this repositories. +
+The main 'publish' task depends on the this task. This task is always executed if the configuration for server is complete, 'runOnCI' is true and the directory 'repositoryDir' exists.
+|closeRepo  |com.intershop.gradle.nexusstaging.tasks.CloseRepos  | This task closes open repositories. It depends on the upload task. +
+It will be executed if the server configuration is complete and 'runOnCI' is true.
+|===
+
+== Project Extension 'nexusStaging'
+This plugin adds an extension *`nexusStaging`* to the project.
+
+=== Methods
+[cols="20%,15%,65%", width="95%", options="header"]
+|===
+|Method | Values | Description
+|*server* |<<server, server>> | This contains the Nexus server connection configuration.
+|===
+
+=== Properties
+[cols="17%,17%,17%,49%", width="95%", options="header"]
+|===
+|Property       | Type                      | Default value | Description
+
+|*repositoryDir*        |`File`    | '<build dir>/staging/repo'                                       | Directory with local publication.
+|*description*          |`String`  | '<project name> transfer to repo for version <project version>"  | Description for the staging repository
+|*resultPropertiesFile* |`File`    | '<build dir>/staging/results/repotransfer.properties'            | Properties with information from transfer result.
+|*runOnCI*              |`boolean`  | false | | This configuration must be true, if the project is used on a CI server. +
+                                 _This can be overwritten by the system or environment variable `RUNONCI` or project property `runOnCI`._
+|===
+
+==== [[server]]Server configuration 'Server'
+
+[cols="17%,17%,15%,51%", width="95%", options="header"]
+|===
+|Property | Type | Default value | Description
+
+|*baseURL*          | `String`      |  | Sonatype Nexus base URL
+|*username*         | `String`      |  | Username for Sonatype Nexus Repository
+|*password*         | `String`      |  | Password for Sonatype Nexus Repository
+|===
+
+== Repository Configurations
+The configured `repositoryDir` will be added to the repository configurations, if the new Maven publish plugin is applied
+as a Maven repository and if the new Ivy publish plugin is applied as Ivy repository. The repository will be added to publications if the name is included  in `publications`.
+The name of the repository configuration is `ivyNexusStaging` or `mvnNexusStaging`.
+
+== Environment Configuration
+
+The behaviour of this plugin can be also controlled by environment variables, so that the plugin can be applied to the project without exceptions.
+
+[cols="17%,17%,65%", width="95%", options="header"]
+|===
+| System variable or Java system property | Project property  | Description
+| *RUNONCI*          | *runOnCI*          | This configuration must be true, if the project is used on a CI server.
+| *NEXUSBASEURL*    | *nexusBaseURL*    | The base url of the repository server, e.g. http://nexus/nexus
+| *NEXUSUSERNAME*   | *nexusUserName*   | The username with the correct role/permissions for transfer
+| *NEXUSUSERPASSWD* | *nexusUserPASSWD* | The password of the user.
+|===
+
+== License
+
+Copyright 2014-2016 Intershop Communications.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+
+
