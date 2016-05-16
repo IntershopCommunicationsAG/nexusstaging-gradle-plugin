@@ -84,7 +84,7 @@ class AbstractRepoTask extends DefaultTask {
      **/
     static List<GAVObject> getModulesFromPom(FileTree srcdir) {
         List<GAVObject> gavs = []
-        FileTree ivyFiles = srcdir.matching { include '**/pom*.xml' }
+        FileTree ivyFiles = srcdir.matching { include '**/*.pom' }
         ivyFiles.each {File f ->
             try {
                 def rootNode = new XmlSlurper().parse(f)

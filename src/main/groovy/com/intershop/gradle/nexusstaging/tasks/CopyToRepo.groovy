@@ -43,6 +43,10 @@ class CopyToRepo extends AbstractRepoTask {
 
         HashSet profiles = getProfiles(nc, gavs)
 
+        if(profiles.size() == 0) {
+            throw new GradleException('No profile found for prepared artifacts. Please check your configuration!')
+        }
+
         project.logger.info('Check for open repos and close.')
         Set openRepoIDs = getOpenRepos(nc, profiles)
 
