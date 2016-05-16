@@ -32,10 +32,10 @@ class NexusConnector {
     public final static String STAGINGEVALUATE_TASK = RESTPATH + 'staging/profile_evaluate'
     public final static String STAGINGREPOSITORIES_TASK = RESTPATH + 'staging/profile_repositories'
     public final static String STAGINGBULK_TASK = RESTPATH + 'staging/bulk'
+
     public final static String STAGINGORDER_TASK = RESTPATH + 'staging/profile_order'
     public final static String STAGINGREPO_TASK = RESTPATH + 'staging/repository'
-
-    private final static String STAGINGRULESETS = RESTPATH + 'staging/rule_sets'
+    public final static String STAGINGRULESETS = RESTPATH + 'staging/rule_sets'
 
     private RESTClient restClient
 
@@ -45,7 +45,7 @@ class NexusConnector {
 
     def assertWithoutSpace = { String name, String val ->
         if (val.contains(' ')) {
-            throw new InvalidUserDataException("Spaces in id '${id}' are not allowed!")
+            throw new InvalidUserDataException("Spaces in id '${name}' are not allowed!")
         }
     }
 
@@ -103,7 +103,7 @@ class NexusConnector {
         try {
             stagingProfiles = getResultObj(response)
         } catch (Exception ex) {
-            log.warn('No profiles found.')
+            log.error('No profiles found. Finished with exception.', ex)
         }
 
         if (stagingProfiles) {
@@ -112,6 +112,8 @@ class NexusConnector {
                 rSet.add([profileID: p.id, profileName: p.name])
             }
             return rSet
+        } else {
+            log.info('No staging profiles available.')
         }
         return []
     }

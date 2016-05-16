@@ -2,9 +2,9 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <Id>com.intershop.test</Iddsfdsf>
-  <artifact>moduleTest</artifactsddsf>
-  <rsion>1.2.3.4</rsiondsffds>
+  <Idbla>com.intershop.test</Idbla>
+  <artifact>moduleTest</artifact>
+  <version>1.2.3.4</version>
   <dependencies>
     <dependency>
       <groupId>org.tmatesoft.svnkit</groupId>
