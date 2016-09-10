@@ -48,6 +48,20 @@ if (project.version.endsWith('-SNAPSHOT')) {
     status = 'snapshot'
 }
 
+allprojects {
+    tasks.withType(GroovyCompile) {
+        groovyOptions.fork = false
+    }
+
+    tasks.withType(Test) {
+        // containers (currently) have 2 dedicated cores and 4GB of memory
+        maxParallelForks = 2
+
+        minHeapSize = '96m'
+        maxHeapSize = '128m'
+    }
+}
+
 test {
     if(project.hasProperty('nexusURL') && project.hasProperty('nexusUser') && project.hasProperty('nexusPasswd')) {
         systemProperty 'nexus_url_config', project.nexusURL
