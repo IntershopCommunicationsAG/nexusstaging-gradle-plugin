@@ -1,5 +1,5 @@
 = Nexus Staging Gradle Plugin
-:latestRevision: 1.0.0
+:latestRevision: 2.1.0
 :toc:
 
 == Summary
